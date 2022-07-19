@@ -11,7 +11,7 @@ import com.devsuperior.dslearnbds.entities.Offer;
 import com.devsuperior.dslearnbds.entities.User;
 
 @Embeddable
-public class EnrollmentPK implements Serializable {
+public class EnrollmentPK implements Serializable {//chave primaria user e offer do meu enrollemnt.
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
