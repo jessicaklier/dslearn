@@ -1,13 +1,17 @@
 package com.devsuperior.dslearnbds.entities;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.devsuperior.dslearnbds.entities.pk.EnrollmentPK;
@@ -30,6 +34,9 @@ public class Enrollment {
 	
 	@ManyToMany(mappedBy = "enrollmentsDone")
 	private Set<Lesson> lessonsDone = new HashSet<>();
+	
+	@OneToMany(mappedBy = "enrollment")
+	private List<Deliver> deliveries = new ArrayList<>();
 	
 	public Enrollment() {
 		
@@ -86,5 +93,29 @@ public class Enrollment {
 
 	public void setOnlyUpdate(boolean onlyUpdate) {
 		this.onlyUpdate = onlyUpdate;
+	}
+
+	public List<Deliver> getDeliveries() {
+		return deliveries;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(available, deliveries, enrollMoment, id, lessonsDone, onlyUpdate, refundMoment);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Enrollment other = (Enrollment) obj;
+		return available == other.available && Objects.equals(deliveries, other.deliveries)
+				&& Objects.equals(enrollMoment, other.enrollMoment) && Objects.equals(id, other.id)
+				&& Objects.equals(lessonsDone, other.lessonsDone) && onlyUpdate == other.onlyUpdate
+				&& Objects.equals(refundMoment, other.refundMoment);
 	}
 }
