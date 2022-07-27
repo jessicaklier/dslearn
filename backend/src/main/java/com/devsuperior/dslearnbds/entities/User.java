@@ -35,13 +35,12 @@ public class User implements UserDetails, Serializable {
 	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_user_role",
-	joinColumns = @JoinColumn(name = "user_id"),
-	inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>(); // da associaçao de muitos para muitos coloco o SET para garantir nao ter repetiçao
-	
+	@JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>(); // da associaçao de muitos para muitos coloco o SET para garantir nao ter
+												// repetiçao
+
 	public User() {
-		
+
 	}
 
 	public User(Long id, String name, String email, String password) {
@@ -49,7 +48,7 @@ public class User implements UserDetails, Serializable {
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		
+
 	}
 
 	public Long getId() {
@@ -87,7 +86,7 @@ public class User implements UserDetails, Serializable {
 	public Set<Role> getRoles() {
 		return roles;
 	}
-	
+
 	public List<Notification> getNotifications() {
 		return getNotifications();
 	}
@@ -108,7 +107,7 @@ public class User implements UserDetails, Serializable {
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
@@ -137,8 +136,14 @@ public class User implements UserDetails, Serializable {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
 
-	
+	public boolean hasHole(String roleName) {
+		for (Role role : roles) {
+			if (role.getAuthority().equals(roleName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
-
