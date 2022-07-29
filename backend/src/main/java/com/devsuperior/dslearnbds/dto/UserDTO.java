@@ -2,7 +2,9 @@ package com.devsuperior.dslearnbds.dto;
 
 import java.io.Serializable;
 
-import org.apache.catalina.User;
+import com.devsuperior.dslearnbds.entities.User;
+
+
 
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -11,8 +13,7 @@ public class UserDTO implements Serializable {
 	private String name;
 	private String email;
 	
-	public UserDTO() {
-		
+	public UserDTO() {	
 	}
 
 	public UserDTO(Long id, String name, String email) {
